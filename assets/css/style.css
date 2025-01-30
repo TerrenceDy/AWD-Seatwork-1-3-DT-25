@@ -53,6 +53,7 @@ header nav ul li a:hover {
 
 main {
   text-align: center;
+  width: 1000px;
   padding: 80px;
   height: 355px;
 }
