@@ -220,12 +220,20 @@ p.text span{
   }
   
   .homepage-image {
-    width: 300px; /* Adjust as needed */
+    width: 300px;
     height: auto;
     border-radius: 10px;
   }
   
   .homepage-text {
     max-width: 600px;
+  }
+  
+  body {
+    background-color: #252525;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background 0.5s ease-in-out;
   }
   
