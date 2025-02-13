@@ -11,7 +11,7 @@ document.body.appendChild(payButton);
 let ticketPrice = +movieSelect.value;
 
 function getMovieKey() {
-    return `selectedSeats_${movieSelect.value}`;
+    return `soldSeats_${movieSelect.selectedIndex}`;
 }
 
 function setMovieData(movieIndex, moviePrice) {
@@ -22,19 +22,17 @@ function setMovieData(movieIndex, moviePrice) {
 function updateSelectedCount() {
     const selectedSeats = document.querySelectorAll(".row .seat.selected");
     const seatsIndex = [...selectedSeats].map(seat => [...seats].indexOf(seat));
-    localStorage.setItem(getMovieKey(), JSON.stringify(seatsIndex));
-    
     count.innerText = selectedSeats.length;
     total.innerText = selectedSeats.length * ticketPrice;
 }
 
 function populateUI() {
-    const selectedSeats = JSON.parse(localStorage.getItem(getMovieKey())) || [];
+    const soldSeats = JSON.parse(localStorage.getItem(getMovieKey())) || [];
     
     seats.forEach((seat, index) => {
         seat.classList.remove("selected");
         seat.classList.remove("sold");
-        if (selectedSeats.includes(index)) {
+        if (soldSeats.includes(index)) {
             seat.classList.add("sold");
         }
     });
@@ -63,7 +61,8 @@ payButton.addEventListener("click", () => {
     
     if (confirm("Confirm your payment?")) {
         selectedSeats.forEach(seat => seat.classList.replace("selected", "sold"));
-        localStorage.setItem(getMovieKey(), JSON.stringify([...document.querySelectorAll(".row .seat.sold")].map(seat => [...seats].indexOf(seat))));
+        const soldSeats = [...document.querySelectorAll(".row .seat.sold")].map(seat => [...seats].indexOf(seat));
+        localStorage.setItem(getMovieKey(), JSON.stringify(soldSeats));
         updateSelectedCount();
         alert("Payment successful! Your seats are now booked.");
     }
